@@ -7,18 +7,33 @@ fn main() {
     println!("Guess the number!");
 
     let secret_number = rand::thread_rng().gen_range(0..101);
-    println!("Secret number: {}", secret_number);
+    let mut tries = 0;
+    println!("Current no. of tries: {}", tries);
 
-    println!("Please input your guess: ");
-    
-    let mut guess = String::new();
-    stdin().read_line(&mut guess).expect("Failed to read line!");
-    let guess: u32 = guess.trim().parse().expect("Failed to convert to 8 bit int!");
-    println!("You guessed: {}", guess);
 
-    match guess.cmp(&secret_number) {
-        Ordering::Less => println!("Too small!"),
-        Ordering::Greater => println!("Too big!"),
-        Ordering::Equal => println!("You win!"),
+    loop {
+        println!("Please input your guess: ");
+        
+        let mut guess = String::new();
+        stdin().read_line(&mut guess).expect("Failed to read line!");
+        let guess: u32 = match guess.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+        tries += 1;
+        
+        println!("You guessed: {}", guess);
+
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal => {
+                println!("Current no. of tries: {}", tries);
+                println!("You win!");
+                break;
+            },
+        }
+        println!("Current no. of tries: {}", tries);
     }
+
 }
