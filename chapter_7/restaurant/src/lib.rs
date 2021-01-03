@@ -1,18 +1,4 @@
-mod front_of_house { // defining a new module
-	pub mod hosting { // a module can have sub-modules
-		pub fn add_to_waitlist() {}
-		#[allow(dead_code)]
-		fn seat_at_table() {}
-	}
-	pub mod serving {
-		#[allow(dead_code)]
-		fn take_order() {}
-		#[allow(dead_code)]
-		pub fn serve_order() {}
-		#[allow(dead_code)]
-		fn take_payment() {}
-	}
-}
+mod front_of_house;
 
 mod back_of_house {
 	pub enum Appetizer {
@@ -43,7 +29,10 @@ mod back_of_house {
 }
 
 // use crate::front_of_house::hosting;
-use self::front_of_house::hosting; // relative path
+// use self::front_of_house::hosting; // relative path
+
+// re-exporting
+pub use crate::front_of_house::hosting; // by making it public it makes this path accessible to external code.
 
 pub fn eat_at_restaurant() {
 	// Absolute path
